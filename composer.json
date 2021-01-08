@@ -1,0 +1,15 @@
+{
+    "name": "codificar/toll",
+    "description": "A toll library for laravel.",
+    "authors": [
+        {
+            "name": "Codificar",
+            "email": "libs@codificar.com.br"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Codificar\\Toll\\": "src/"
+        }
+    }
+}
