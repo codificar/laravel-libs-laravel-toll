@@ -20,7 +20,8 @@ class Toll extends Model
 
     public $fillable = [
 		'name',
-		'address'
+        'address',
+        'position'
     ];
     
     protected $spatialFields = [
