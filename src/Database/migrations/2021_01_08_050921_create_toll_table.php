@@ -17,7 +17,12 @@ class CreateTollTable extends Migration
             Schema::create('toll', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->nullable();
-                $table->string('address')->nullable();
+                $table->string('highway')->nullable();
+                $table->string('km')->nullable();
+                $table->string('category')->nullable();
+                $table->integer('axis')->nullable();
+                $table->string('category_description')->nullable();
+                $table->float('value')->nullable();
                 $table->point('position')->nullable();
                 $table->timestamps();
             });

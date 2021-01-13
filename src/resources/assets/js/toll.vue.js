@@ -20,6 +20,9 @@ import tollcategory from './pages/toll_category_list';
 
 new Vue({
     el: '#toll',
+    data: {
+        showModal: false
+    },
     components: {
         tolllist,
         tolladd,

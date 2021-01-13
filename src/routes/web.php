@@ -5,6 +5,7 @@ Route::group(array('namespace' => 'Codificar\Toll\Http\Controllers'), function()
     Route::get('/admin/toll/list', 'TollController@tollList');
     Route::post('/api/lib/toll/import', 'TollController@importTolls');
     Route::post('/api/lib/toll/fetch', 'TollController@fetchTolls');
+    Route::post('/api/lib/toll/delete/{id}', 'TollController@delete');
 
     Route::get('/admin/toll_category/list', array('as' => 'TollCategoryList', 'uses' => 'TollCategoryController@list'));
 

@@ -19,8 +19,7 @@ class CreateTollItemsTable extends Migration
                 $table->integer('toll_id')->unsigned()->nullable();
                 $table->foreign('toll_id')->references('id')->on('toll')->onDelete('cascade');
                 $table->integer('toll_category_id')->nullable()->unsigned();
-                $table->foreign('toll_category_id')->references('id')->on('toll_category')->onUpdate('RESTRICT')->onDelete('CASCADE');
-                $table->integer('axes')->nullable();
+                $table->foreign('toll_category_id')->references('id')->on('toll_category')->onDelete('CASCADE');
                 $table->timestamps();
             });
         }

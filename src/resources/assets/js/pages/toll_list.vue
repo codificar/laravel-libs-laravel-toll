@@ -24,7 +24,7 @@
                                 
                                         <div class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
                                                 <!-- DELETAR -->
-                                            <button v-if="DeletePermission" v-on:click="deleteToll(toll.id, toll.name)" type="button" class="dropdown-item" tabindex="-1" >{{trans('toll.delete')}} </button> 
+                                            <button @click="deleteToll(toll.id, toll.name)" type="button" class="dropdown-item" tabindex="-1" >{{trans('toll.delete')}} </button> 
                                         </div>
                                     </div>
                                 </td>
@@ -53,9 +53,57 @@ export default {
         };
     },
     methods: {
+        fetch(page = 1) {
+            var component = this;
+            axios.post("/api/lib/toll/fetch", {
+                pagination: {
+                    actual : page,
+                    itensPerPage : 10
+                },
+                filters: {
+                    Toll: this.toll_filter,
+                    ItensPerPage: 10
+                }
+            })
+            .then(
+                response => {
+                    component.tolls = response.data;
+                },
+                response => {
+                // error callback
+                }
+            );
+            this.$nextTick();
+        },
         deleteToll(id, name) {
-
+            this.$swal({
+                title: this.trans('toll.toll_delete_confirm') + " " + name + "?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: this.trans('toll.yes'),
+                cancelButtonText: this.trans('toll.no')
+                }).then((result) => {
+                if (result.value) {
+                    //Try to remove and show fail mission if fails
+                    axios.post("/api/lib/toll/delete/" + id).then(
+                        response => {
+                        this.fetch();
+                        },
+                        response => {
+                            this.$swal({
+                                title: this.trans('toll.delete_failed'),
+                                type: 'error'
+                            });
+                            console.log(response);
+                            // error callback
+                        }
+                    );
+                }
+            });
         }
+    },
+    created() {
+        this.fetch();
     }
 }
 </script>

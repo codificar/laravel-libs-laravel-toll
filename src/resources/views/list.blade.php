@@ -16,10 +16,9 @@
 <div id='toll'>
     <div class="row">
         <div class="col-6 col-md-12 aling-self-end">
-            <button  class="btn pull-right hidden-sm-down btn-success" id="show-modal" @click="showModal = true">{{trans('toll::toll.toll_import')}} </button>
+            <button  class="btn pull-right hidden-sm-down btn-success mb-4 mr-4" id="show-modal" @click="showModal = true">{{trans('toll::toll.toll_import')}} </button>
             <!-- use the modal component, pass in the prop -->
-            <tolladd v-if="showModal" @close="showModal = false">
-            </tolladd>
+            <tolladd v-if="showModal" @close="showModal = false"></tolladd>
         </div>
     </div>
     <tolllist />

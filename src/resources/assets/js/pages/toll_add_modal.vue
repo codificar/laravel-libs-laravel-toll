@@ -27,7 +27,7 @@ export default {
             $("#send").attr("disabled", true);
             $(".close").attr("disabled", true);
             $("#loader").css("display", "block");
-            axios.post('uploadTolls', formData, config)
+            axios.post('/api/lib/toll/import', formData, config)
             .then(function (response) {
                 currentObj.success = response.data.message;
                 $("#loader").css("display", "none");

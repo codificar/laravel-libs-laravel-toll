@@ -1426,6 +1426,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_
 
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#toll',
+    data: {
+        showModal: false
+    },
     components: {
         tolllist: __WEBPACK_IMPORTED_MODULE_3__pages_toll_list___default.a,
         tolladd: __WEBPACK_IMPORTED_MODULE_4__pages_toll_add_modal___default.a,
@@ -32087,7 +32090,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -32189,7 +32192,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        deleteToll: function deleteToll(id, name) {}
+        fetch: function fetch() {
+            var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+            var component = this;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/lib/toll/fetch", {
+                pagination: {
+                    actual: page,
+                    itensPerPage: 10
+                },
+                filters: {
+                    Toll: this.toll_filter,
+                    ItensPerPage: 10
+                }
+            }).then(function (response) {
+                component.tolls = response.data;
+            }, function (response) {
+                // error callback
+            });
+            this.$nextTick();
+        },
+        deleteToll: function deleteToll(id, name) {
+            var _this = this;
+
+            this.$swal({
+                title: this.trans('toll.toll_delete_confirm') + " " + name + "?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: this.trans('toll.yes'),
+                cancelButtonText: this.trans('toll.no')
+            }).then(function (result) {
+                if (result.value) {
+                    //Try to remove and show fail mission if fails
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/lib/toll/delete/" + id).then(function (response) {
+                        _this.fetch();
+                    }, function (response) {
+                        _this.$swal({
+                            title: _this.trans('toll.delete_failed'),
+                            type: 'error'
+                        });
+                        console.log(response);
+                        // error callback
+                    });
+                }
+            });
+        }
+    },
+    created: function created() {
+        this.fetch();
     }
 });
 
@@ -33089,28 +33139,19 @@ var render = function() {
                             }
                           },
                           [
-                            _vm.DeletePermission
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "dropdown-item",
-                                    attrs: { type: "button", tabindex: "-1" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.deleteToll(
-                                          toll.id,
-                                          toll.name
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      _vm._s(_vm.trans("toll.delete")) + " "
-                                    )
-                                  ]
-                                )
-                              : _vm._e()
+                            _c(
+                              "button",
+                              {
+                                staticClass: "dropdown-item",
+                                attrs: { type: "button", tabindex: "-1" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteToll(toll.id, toll.name)
+                                  }
+                                }
+                              },
+                              [_vm._v(_vm._s(_vm.trans("toll.delete")) + " ")]
+                            )
                           ]
                         )
                       ])
@@ -33265,7 +33306,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             $("#send").attr("disabled", true);
             $(".close").attr("disabled", true);
             $("#loader").css("display", "block");
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('uploadTolls', formData, config).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/lib/toll/import', formData, config).then(function (response) {
                 currentObj.success = response.data.message;
                 $("#loader").css("display", "none");
                 if (response.data.success == true) {

@@ -17,12 +17,6 @@ class Toll extends Model
     protected $table = 'toll';
     
     protected $primaryKey = 'id';
-
-    public $fillable = [
-		'name',
-        'address',
-        'position'
-    ];
     
     protected $spatialFields = [
         'position'

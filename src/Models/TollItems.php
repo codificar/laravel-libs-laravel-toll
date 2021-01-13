@@ -70,12 +70,12 @@ class TollItems extends Model
 			if(isset($TollConditions["name"]))
 				$query->where('toll.name', 'LIKE', '%'.$TollConditions["name"].'%');
 
-			if(isset($TollConditions["axis"]))
-				 $query->where('toll_items.axis', 'LIKE', '%'.$TollConditions["axis"].'%');
+			// if(isset($TollConditions["axis"]))
+			// 	 $query->where('toll_items.axis', 'LIKE', '%'.$TollConditions["axis"].'%');
 			
 		}
 
-		return $query->paginate($pagination["itensPerPage"], array('toll.address as ad','toll.address as address','toll.name as name', 'toll_items.id as id','toll_items.axis as axis'));
+		return $query->paginate($pagination["itensPerPage"], array('toll.address as ad','toll.address as address','toll.name as name', 'toll_items.id as id'));
     }
 	
 	/** Função que limpa as tabelas;	
