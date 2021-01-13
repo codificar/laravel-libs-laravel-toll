@@ -1,9 +1,7 @@
 <script>
 import axios from "axios";
+
 export default {
-    /*
-      Defines the data used by the component
-    */
     data(){
         return {
               name: '',
@@ -26,26 +24,22 @@ export default {
             formData.append('file', this.file);
             $("#send").attr("disabled", true);
             $(".close").attr("disabled", true);
-            $("#loader").css("display", "block");
             axios.post('/api/lib/toll/import', formData, config)
-            .then(function (response) {
-                currentObj.success = response.data.message;
-                $("#loader").css("display", "none");
-                if(response.data.success == true){
-                    window.location.reload();
-                };
-            })
-            .catch(function (error) {
-                $("#loader").css("display", "none");;
-                currentObj.output = error;
-            });
+              .then(function (response) {
+                  currentObj.success = response.data.message;
+                  if(response.data.success == true){
+                      window.location.reload();
+                  };
+              })
+              .catch(function (error) {
+                  currentObj.output = error;
+              });
 
         }
     }
 }
 </script>
 <template>
-  
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
@@ -62,14 +56,17 @@ export default {
                   <div v-if="success != ''" class="alert alert-success" role="dark">
                       {{ trans('toll.'+success+'') }}
                   </div>
-                  <form @submit="formSubmit" enctype="multipart/form-data">   
-                    <strong>File:</strong>
-                      <input type="file" id="file" class="form-group" v-on:change="onFileChange">
-                      <button id="send" class="btn btn-success">{{ trans('toll.send') }}</button>
+                  <form @submit="formSubmit" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="">Envie um arquivo</label>
+                      <input type="file" id="file" class="form-control" v-on:change="onFileChange">
+                    </div>
                   </form>
-                  <div id="loader"></div>
               </div>
             </slot>
+          </div>
+          <div class="modal-footer">
+            <button id="send" class="btn btn-success">{{ trans('toll.send') }}</button>
           </div>
         </div>
       </div>
@@ -111,10 +108,6 @@ export default {
   color: #42b983;
 }
 
-.modal-body {
-  margin: 80px 0;
-}
-
 .modal-default-button {
   float: right;
 }
@@ -141,14 +134,6 @@ export default {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
-.btn {
-  background-color: DodgerBlue; /* Blue background */
-  border: none; /* Remove borders */
-  color: white; /* White text */
-  padding: 12px 16px; /* Some padding */
-  font-size: 16px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-}
 
 .btn-file{
   background-color: DodgerBlue; /* Blue background *
@@ -156,23 +141,6 @@ export default {
   padding: 12px 16px; /* Some padding */
   font-size: 16px; /* Set a font size */
   cursor: pointer; /* Mouse pointer on hover */
-}
-#loader {
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  z-index: 1;
-  width: 30px;
-  height: 30px;
-  margin: -75px 0 0 -75px;
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-  display: none;
 }
 
 @-webkit-keyframes spin {
