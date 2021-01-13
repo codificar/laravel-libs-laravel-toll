@@ -38,4 +38,7 @@ return array(
 	'toll_category_add' => 'Adicionar Categoria de Pedágio',
 	'name.toll_category_exist' => 'A Categoria de Pedágio já existe',
 	'toll_category_delete_confirm' => 'Tem certeza que deseja remover a Categoria de Pedágio',
+	'highway' => 'Rodovia',
+	'description' => 'Descrição',
+	'price' => 'Valor',
 );

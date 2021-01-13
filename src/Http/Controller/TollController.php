@@ -20,13 +20,18 @@ class TollController extends Controller
         return view('toll::list');
     }
 
-    public function fetchTolls(Request $request)
+    /**
+     * @api {POST} /api/lib/toll/fetch
+     * List tolls
+     * @param Request $request
+     * @param TollItems $items
+     * @return json
+     */
+    public function fetchTolls(Request $request, TollItems $items)
     {
-        $model = new TollItems();
-
-        $toll = $model->searchQuery($request);
-        
-        return json_encode($toll);
+        return response()->json([
+            'toll' => $items->searchQuery($request)
+        ]);
     }
 
     /**

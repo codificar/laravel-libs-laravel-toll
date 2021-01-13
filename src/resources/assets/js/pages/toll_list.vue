@@ -7,15 +7,21 @@
                         <table class="table">
                             <tr>
                                 <th>{{trans('toll.name')}}</th>
-                                <th>{{trans('toll.address')}}</th>
+                                <th>{{trans('toll.highway')}}</th>
+                                <th>Km</th>
                                 <th>{{trans('toll.axis')}}</th>
+                                <th>{{ trans('toll.description') }}</th>
+                                <th>{{ trans('toll.price') }}</th>
                                 <th>{{trans('toll.action_grid')}}</th>
                             </tr>      
                             <tr v-for="toll in tolls.data" v-bind:key="toll.id">
                                 <td>{{ toll.name }}</td>
-                                <td>{{ toll.address }}</td>
+                                <td>{{ toll.highway }}</td>
+                                <td>{{ toll.km }}</td>
                                 <td>{{ toll.axis }}</td>
-                                <td>
+                                <td>{{ toll.category_description }}</td>
+                                <td>{{ toll.value }}</td>
+                                <td class="toll-action-col">
                                     <div class="dropdown">
                                         <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
                                             {{trans('toll.action_grid') }}
@@ -33,6 +39,8 @@
                         </table>
                     </div>
                 </div>
+
+                <pagination :data="tolls" @pagination-change-page="fetch"></pagination>
             </div>
         </div>
   </div>
@@ -67,7 +75,7 @@ export default {
             })
             .then(
                 response => {
-                    component.tolls = response.data;
+                    component.tolls = response.data.toll;
                 },
                 response => {
                 // error callback
@@ -109,5 +117,7 @@ export default {
 </script>
 
 <style>
-
+.toll-action-col {
+    width: 100px;
+}
 </style>
