@@ -8,8 +8,7 @@ Route::group(array('namespace' => 'Codificar\Toll\Http\Controllers'), function()
     Route::post('/api/lib/toll/delete/{id}', 'TollController@delete');
 
     Route::get('/admin/toll_category/list', array('as' => 'TollCategoryList', 'uses' => 'TollCategoryController@list'));
-
-    Route::post('/api/lib/toll_category/fetch', array('as' => 'TollCategoryFetch', 'uses'=>'TollCategoryController@query'));
+    Route::post('/api/lib/toll_category/fetch', array('as' => 'TollCategoryFetch', 'uses'=>'TollCategoryController@fetch'));
     Route::resource('/api/lib/toll_categories', 'TollCategoryController');
 });
 

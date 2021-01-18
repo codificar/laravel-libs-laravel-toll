@@ -21,6 +21,9 @@ class TollCategory extends Model
         'name'
     ];
 
+	/**
+	 * Relation with TollItems
+	 */
     public function itensTolls(){
         return $this->hasMany(TollItems::class);
     }
@@ -29,7 +32,7 @@ class TollCategory extends Model
      * 	@param request.
      * 	@return search;
      */
-	public function searchQuery(Request $request)
+	public function searchQuery($request)
 	{	
 		// get query parameters
 		$params = $request['searchParams'];
@@ -39,11 +42,12 @@ class TollCategory extends Model
 			$pagination = $params["pagination"];
 		}
 		else { // set default 
-			$pagination =  ["actual" => 1, "itensPerPage" => 25 ] ;
+			$pagination =  ["actual" => 1, "itensPerPage" => 5 ] ;
 		}
 
 		// resolve current page
 		$currentPage = $pagination["actual"];
+
 		Paginator::currentPageResolver(function () use ($currentPage) {
 			return $currentPage;
 		});	
@@ -56,23 +60,33 @@ class TollCategory extends Model
 
 		if(isset($filters["Categoryfilter"])){
 			$tollCategoryConditions = $filters["Categoryfilter"] ;
+
 			if(isset($tollCategoryConditions["name"]))
 				$query->where('toll_category.name', 'LIKE', '%'.$tollCategoryConditions["name"].'%');
-
 		}
 		return $query->paginate($pagination["itensPerPage"], array('toll_category.id as id','toll_category.name as name'));
 
 	}
 	
-	public function store(Request $request){
+	/**
+	 * Store or edit TollCategory
+	 * @param object $request
+	 * @return TollCategory
+	 */
+	public function store($request){
 		$tollCategory =  $request->editMode == true ? TollCategory::findOrFail($request->id) : new TollCategory();
 		$tollCategory->name = $request->name;
-		if($tollCategory->save()){
-			return $tollCategory;
-		}
+		$tollCategory->save();
+
+		return $tollCategory;
 	}
 
-	public function validadeIfExist(Request $request){
-		return TollCategory::where('name',$request->name)->first();
+	/**
+	 * Check if exists
+	 * @param string $name
+	 * @return TollCategory
+	 */
+	public static function validadeIfExist($name){
+		return self::where('name',$name)->first();
 	}
 }

@@ -51,7 +51,7 @@ class TollController extends Controller
 
     /** Função que recebe os dados para serem deletados e os elimina do banco de dados;
      * 	@param id int - id do campo na tabela toll, referente ao campo que deve ser deletado.
-     * 	@return response-success;
+     * 	@return json
      */
     public function delete($id) {
         $tollItems = TollItems::findOrFail($id);

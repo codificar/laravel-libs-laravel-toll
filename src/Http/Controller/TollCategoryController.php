@@ -14,44 +14,41 @@ class TollCategoryController extends Controller
      * Render list category page
      * @return view
      */
-    public function list () {
+    public function list () 
+    {
         return view('toll::list_category');
     }
 
-    public function query(Request $request) {
-     
-        $model = new TollCategory();
-        
-        $tollCategory = $model->searchQuery($request);
-        
-        return  TollCategoryResource::collection($tollCategory);
-    }
-
-    /** Função que responsavel realizar insert and edit;	
-    * 	@return true or false, json message;	
-    */
-    public function store(TollCategoryFormRequest $request){
-        $model = new TollCategory();
-        if($request->editMode == false){
-            $tollCategory = $model->validadeIfExist($request);
-            if($tollCategory){
-                return response()->json(
-                    [
-                        'success' => false,
-                        'errors' => [trans('category.name.toll_category_exist')],
-                        'error_code' => \ApiErrors::REQUEST_FAILED
-                    ]
-                );  
-            }
-        }
-        $tollCategory = $model->store($request);
-        return new TollCategoryResource($tollCategory); 
-    }
-
-     /** Função que recebe os dados para serem deletados e os elimina do banco de dados;
-     * 	@param id int - id do campo na tabela toll_Category, referente ao campo que deve ser deletado.
-     * 	@return response-success;
+    /** 
+     * @api {POST} /api/lib/toll_categories
+     * Função que responsavel realizar insert and edit
+     * @param TollCategoryFormRequest $request	
+     * @return TollCategoryResource
      */
+    public function store(TollCategoryFormRequest $request, TollCategory $model)
+    {
+        return new TollCategoryResource($model->store($request)); 
+    }
+
+    /**
+     * @api {POST} /api/lib/toll_category/fetch
+     * Fetch the toll categories registers
+     * @param Request $request
+     * @param TollCategory $tollCategory
+     * @return json
+     */
+    public function fetch(Request $request, TollCategory $tollCategory) 
+    {
+        return response()->json([
+            'toll' => $tollCategory->searchQuery($request)
+        ]);
+    }
+
+     /** 
+      * Função que recebe os dados para serem deletados e os elimina do banco de dados;
+      * @param id int - id do campo na tabela toll_Category, referente ao campo que deve ser deletado.
+      * @return response
+      */
     public function destroy($id) {
         $tollCategory = TollCategory::findOrFail($id);
         if($tollCategory->delete()){

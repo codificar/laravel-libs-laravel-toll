@@ -86,8 +86,9 @@ class TollItems extends Model
 		));
     }
 	
-	/** Função que limpa as tabelas;	
-     * 	@return boolean - true ou false;	
+	/** 
+	 * Função que limpa as tabelas
+     * @return boolean
      */
     public function clearTableDB(){
 		try {

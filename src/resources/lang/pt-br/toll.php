@@ -32,6 +32,8 @@ return array(
 	'delete_failed'		=> 'Falha ao excluir a Praça de Pedágio',
 	'added_success'		=> 'Praças de Pedágios Importadas  com sucesso',
 	'added_fail'		=> 'Falha ao Importar as  Praças de Pedágio',
+	'add_success'		=> 'Sucesso ao adicionar categoria.',
+	'edit_success'		=> 'Sucesso ao editar categoria.',
 	'toll_category' => 'Categorias de Pedágios',
 	'toll_category_list' => 'Lista de Categorias de Pedágios',
 	'toll_category_edit' => 'Editar Categoria de Pedágio',

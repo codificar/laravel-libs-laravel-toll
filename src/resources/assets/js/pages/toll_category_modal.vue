@@ -1,8 +1,15 @@
 <script>
 import axios from "axios";
 export default {
-	inject: ['closeModal','fetch','save'],
-	props: ["tollCategory","modeEdit"],
+	inject: [
+		'closeModal',
+		'fetch',
+		'save'
+	],
+	props: [
+		"tollCategory",
+		"modeEdit"
+	],
 	data() {
 		return{
 			editMode: false,
@@ -24,19 +31,20 @@ export default {
 				response => {
 					if(response.data.success == false){
 						this.$swal({
-						title: this.trans(''+response.data.errors[0]+''),
-						timer: 2500,
-						showConfirmButton: false,
-						type: 'error'
+							title: this.trans(''+response.data.errors[0]+''),
+							timer: 2500,
+							showConfirmButton: false,
+							type: 'error'
 						});
 					} else {
 						this.fetch();
 						this.$swal({
-						title: currentObj.formTollCategory.id = this.editMode == true?this.trans('toll.edit_success'):this.trans('toll.add_success'),
-						timer: 2500,
-						showConfirmButton: false,
-						type: 'success'
+							title: currentObj.formTollCategory.id = this.editMode == true?this.trans('toll.edit_success'):this.trans('toll.add_success'),
+							timer: 2500,
+							showConfirmButton: false,
+							type: 'success'
 						});
+
 						setTimeout(function(){
 								currentObj.modalClose();
 						},3000);
@@ -66,38 +74,40 @@ export default {
 	}
 }
 </script>
+
 <template>
-<transition name="modal">
-	<div class="modal-mask">
-		<div class="modal-wrapper">
-			<div class="modal-container">
-				<div class="modal-header">
-					<h5 class="modal-title" v-show="!this.editMode" id="addNewLabel">{{ trans('toll.toll_category_add') }}</h5>
-					<h5 class="modal-title" v-show="this.editMode" id="addNewLabel">{{trans('toll.edit')}}</h5>
-					<button type="button" class="close" data-dismiss="modal" @click="modalClose()" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<slot name="body">
-						<div class="form-group">
-							<label for="name" class=" control-label">{{ trans('toll.name') }}*</label>
-							<input v-model="formTollCategory.name" name="name" type="text" id="name" class="form-control input-lg" maxlenght="255" auto-focus="" :placeholder="trans('toll.name')">
-						</div>
-					</slot>
-					<div class="modal-footer">
-						<div class="row">
-							<div class="col-md-4 col-sm-12">
-								<button type="submit"  v-on:click="saveForm()" class="btn btn-primary">{{trans('toll.send')}}</button>
+	<transition name="modal">
+		<div class="modal-mask">
+			<div class="modal-wrapper">
+				<div class="modal-container">
+					<div class="modal-header">
+						<h5 class="modal-title" v-show="!this.editMode" id="addNewLabel">{{ trans('toll.toll_category_add') }}</h5>
+						<h5 class="modal-title" v-show="this.editMode" id="addNewLabel">{{trans('toll.edit')}}</h5>
+						<button type="button" class="close" data-dismiss="modal" @click="modalClose()" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<slot name="body">
+							<div class="form-group">
+								<label for="name" class=" control-label">{{ trans('toll.name') }}*</label>
+								<input 
+									v-model="formTollCategory.name" 
+									class="form-control input-lg" 
+									maxlenght="255"
+									:placeholder="trans('toll.name')">
 							</div>
+						</slot>
+						<div class="modal-footer">
+							<button type="submit"  v-on:click="saveForm()" class="btn btn-success">{{trans('toll.send')}}</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</transition>
+	</transition>
 </template>
+
 <style scoped>
 .modal-mask {
 	position: fixed;
@@ -118,12 +128,10 @@ export default {
 
 .modal-container {
 	width: 550px;
-	height:325px;
 	margin: 0px auto;
 	padding: 15px 20px;
 	background-color: #fff;
 	border-radius: 15px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
 	transition: all .3s ease;
 	font-family: Helvetica, Arial, sans-serif;
 }
@@ -133,22 +141,9 @@ export default {
 	color: #42b983;
 }
 
-.modal-body {
-	margin: 20px 0;
-}
-
 .modal-default-button {
 	float: right;
 }
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
 
 .modal-enter {
 	opacity: 0;
