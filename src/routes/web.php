@@ -1,6 +1,9 @@
 <?php
 
-Route::group(array('namespace' => 'Codificar\Toll\Http\Controllers'), function() {
+Route::group(array('namespace' => 'Codificar\Toll\Http\Controllers', 'middleware' => 'auth.admin'), function() {
+
+    Route::get('/admin/toll/settings', 'TollController@settings');
+    Route::post('/api/lib/toll/save_setting', 'TollController@saveSetting');
 
     Route::get('/admin/toll/list', 'TollController@tollList');
     Route::post('/api/lib/toll/import', 'TollController@importTolls');

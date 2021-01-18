@@ -4,6 +4,7 @@ namespace Codificar\Toll\Http\Services;
 
 use Codificar\Toll\Models\Toll;
 use Codificar\Toll\Models\TollCategory;
+use Codificar\Toll\Utils\Helper;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
 
@@ -18,6 +19,13 @@ class TollEstimatePrice
     public static function getPriceToll($type, $polyline)
     {
         try {
+            if (!Helper::getIsTollActive() || !Helper::getApplyInEstimate()) {
+                return [
+                    'value' => 0,
+                    'toll_description' => null
+                ];
+            }
+
             $providerType = \ProviderType::find($type);
 
             if ($polyline && !is_array($polyline) && get_class($polyline) == 'Illuminate\Database\Eloquent\Collection') {

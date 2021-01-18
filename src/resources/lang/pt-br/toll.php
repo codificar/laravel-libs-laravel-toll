@@ -24,7 +24,7 @@ return array(
 	'file_required' => 'Selecione um arquivo para importação*',
 
 	'toll_delete_confirm' => 'Tem certeza que deseja remover a Praça de Pedágio',
-
+	'save' => 'Salvar',
 	'yes' 				=> 'Sim',
 	'no' 				=> 'Não',
 	'close'             => 'Fechar',
@@ -43,4 +43,7 @@ return array(
 	'highway' => 'Rodovia',
 	'description' => 'Descrição',
 	'price' => 'Valor',
+	'toll_settings' => 'Configurações de pedágios',
+	'activate' => 'Ativar módulo de pedágios',
+	'estimate_apply' => 'Aplicar preço na estimativa'
 );

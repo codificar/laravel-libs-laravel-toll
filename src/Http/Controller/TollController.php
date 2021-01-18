@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Codificar\Toll\Http\Requests\ImportTollsFormRequest;
 use Codificar\Toll\Imports\TollsImport;
 use Codificar\Toll\Models\TollItems;
+use Codificar\Toll\Utils\Helper;
 use Maatwebsite\Excel\Facades\Excel;
+use Settings;
 
 class TollController extends Controller 
 {
@@ -57,5 +59,46 @@ class TollController extends Controller
         $tollItems = TollItems::findOrFail($id);
         $tollItems->delete();
         return response()->json(['success' => true, 'message' => trans('success_delete')]);
+    }
+
+    public function settings()
+    {
+        return view('toll::settings', [
+            'is_toll_active' => Helper::getIsTollActive(),
+            'apply_toll_in_estimate' => Helper::getApplyInEstimate()
+        ]);
+    }
+
+    /**
+     * Save setting for toll
+     * @param Request $request
+     * @return json
+     */
+    public function saveSetting(Request $request)
+    {
+        try {
+            Settings::updateOrCreate([
+                'key' => 'is_toll_active'
+            ], [
+                'key' => 'is_toll_active',
+                'value' => $request->is_toll_active
+            ]);
+
+            Settings::updateOrCreate([
+                'key' => 'apply_toll_in_estimate'
+            ], [
+                'key' => 'apply_toll_in_estimate',
+                'value' => $request->apply_toll_in_estimate
+            ]);
+    
+            return response()->json([
+                'success' => true
+            ]);
+        } catch (\Throwable $th) {
+            \Log::error($th->getMessage());
+            return response()->json([
+                'success' => false
+            ]);
+        }
     }
 }
