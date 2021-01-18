@@ -19,7 +19,7 @@ class TollEstimatePrice
     public static function getPriceToll($type, $polyline)
     {
         try {
-            if (!Helper::getIsTollActive() || !Helper::getApplyInEstimate()) {
+            if (!Helper::getIsTollActive()) {
                 return [
                     'value' => 0,
                     'toll_description' => null
@@ -30,6 +30,7 @@ class TollEstimatePrice
 
             if ($polyline && !is_array($polyline) && get_class($polyline) == 'Illuminate\Database\Eloquent\Collection') {
                 $polylineData = [];
+                
                 foreach ($polyline as $item) {
                     $polylineData[] = [
                         'lat' => $item->latitude,

@@ -45,5 +45,7 @@ return array(
 	'price' => 'Valor',
 	'toll_settings' => 'Configurações de pedágios',
 	'activate' => 'Ativar módulo de pedágios',
-	'estimate_apply' => 'Aplicar preço na estimativa'
+	'estimate_apply' => 'Aplicar preço na estimativa',
+	'select_category' => 'Selecione uma categoria de pedágio',
+	'toll_price' => 'Valor de pedágio'
 );
