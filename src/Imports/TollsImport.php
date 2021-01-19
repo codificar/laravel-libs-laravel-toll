@@ -16,13 +16,22 @@ class TollsImport implements ToCollection
     {
         $factory = new MapsFactory('places');
         $clicker = $factory->createMaps();
+
+        $oldAddress = null;
+        $oldPoint = null;
         
         foreach ($rows as $row) {
             if ($row[6] != null && gettype($row[6]) != 'string') {
-                $place = $clicker->getGeocodeWithAddress($this->formatAddress($row));
-                $point = $place['success'] ? 
-                    new Point($place['data']['latitude'], $place['data']['longitude']) :
-                    null;
+
+                if ($oldAddress != $this->formatAddress($row)) {
+                    $place = $clicker->getGeocodeWithAddress($this->formatAddress($row));
+                    $point = $place['success'] ? 
+                        new Point($place['data']['latitude'], $place['data']['longitude']) :
+                        null;
+                } else {
+                    $place = $oldAddress;
+                    $point = $oldPoint;
+                }
                 
                 try {
                     $toll = new Toll;
@@ -44,6 +53,9 @@ class TollsImport implements ToCollection
                         $tollItems->toll_category_id = $tollCategory->id;
                         $tollItems->save();
                     }
+
+                    $oldAddress = $this->formatAddress($row);
+                    $oldPoint = $point;
                 } catch (\Throwable $th) {
                     \Log::error($th->getMessage());
                     return false;

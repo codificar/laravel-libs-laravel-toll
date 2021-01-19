@@ -53,7 +53,7 @@ export default {
     props: ["DeletePermission"],
     data() {
         return {
-            tolls: [],
+            tolls: {},
             toll_filter: {
                 name: "",
                 axis: "",

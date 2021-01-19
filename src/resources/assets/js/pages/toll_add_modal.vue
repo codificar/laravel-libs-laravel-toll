@@ -4,35 +4,43 @@ import axios from "axios";
 export default {
     data(){
         return {
-              name: '',
-              file: '',
-              success: ''
+          name: '',
+          file: '',
+          success: '',
+          onLoad: false
       }
     },
     methods: {
         onFileChange(e){
-            console.log(e.target.files[0]);
-            this.file = e.target.files[0];
+          console.log(e.target.files[0]);
+          this.file = e.target.files[0];
         },
         formSubmit(e) {
-            e.preventDefault();
             let currentObj = this;
+            currentObj.onLoad = true;
+            e.preventDefault();
+
             const config = {
-                headers: { 'content-type': 'multipart/form-data' }
+              headers: { 'content-type': 'multipart/form-data' }
             }
+
             let formData = new FormData();
             formData.append('file', this.file);
+
             $("#send").attr("disabled", true);
             $(".close").attr("disabled", true);
+
             axios.post('/api/lib/toll/import', formData, config)
               .then(function (response) {
+                  currentObj.onLoad = false;
                   currentObj.success = response.data.message;
                   if(response.data.success == true){
                       window.location.reload();
                   };
               })
               .catch(function (error) {
-                  currentObj.output = error;
+                currentObj.onLoad = false;
+                currentObj.output = error;
               });
 
         }
@@ -54,9 +62,9 @@ export default {
             <slot name="body">
                 <div class="card-body">
                   <div v-if="success != ''" class="alert alert-success" role="dark">
-                      {{ trans('toll.'+success+'') }}
+                      {{ trans('toll.added_success') }}
                   </div>
-                  <form @submit="formSubmit" enctype="multipart/form-data">
+                  <form enctype="multipart/form-data">
                     <div class="form-group">
                       <label for="">Envie um arquivo</label>
                       <input type="file" id="file" class="form-control" v-on:change="onFileChange">
@@ -66,7 +74,8 @@ export default {
             </slot>
           </div>
           <div class="modal-footer">
-            <button id="send" class="btn btn-success">{{ trans('toll.send') }}</button>
+            <button v-if="!onLoad" class="btn btn-success" @click="formSubmit">{{ trans('toll.send') }}</button>
+            <button v-else class="btn btn-success m-progress">{{ trans('toll.send') }}</button>
           </div>
         </div>
       </div>

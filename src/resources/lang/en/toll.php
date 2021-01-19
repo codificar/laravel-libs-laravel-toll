@@ -1,0 +1,51 @@
+<?php
+
+return array(
+	'id' => 'ID',
+	'name' => 'Name',
+	'axis' => 'Axis',
+	'vehicle'=> 'Vehicle type',
+	'address' => 'Address',
+
+	'send' => 'Send',
+	'reset' => 'Reset',
+	'delete' => 'Delete',
+	'filter' => 'Filter',
+	'edit' => 'Edit',
+	'delete' => 'Delete',
+	'action_grid' => 'Actions',
+
+	'toll' => 'Toll plazas',
+	'toll_import' => 'Import Toll plazas',
+	'toll_list' => 'List tolls',
+	'filters' => 'Filters',
+
+	'file_type' => 'File not allowed',
+	'file_required' => 'Select file to import*',
+
+	'toll_delete_confirm' => 'Are you sure you want to remove the Toll Plaza',
+	'save' => 'Save',
+	'yes' 				=> 'Yes',
+	'no' 				=> 'No',
+	'close'             => 'Close',
+	'success_delete'    => 'Deleted success',
+	'delete_failed'		=> 'Failed to delete the Toll Plaza',
+	'added_success'		=> 'Toll plazas successfully imported',
+	'added_fail'		=> 'Failure to Import Toll Plazas',
+	'add_success'		=> 'Success in adding category.',
+	'edit_success'		=> 'Success in adding category.',
+	'toll_category' => 'Toll categories',
+	'toll_category_list' => 'List of Toll Categories',
+	'toll_category_edit' => 'Edit Toll Category',
+	'toll_category_add' => 'Edit Toll Category',
+	'name.toll_category_exist' => 'The Toll Category already exists',
+	'toll_category_delete_confirm' => 'Are you sure you want to remove the Toll Category',
+	'highway' => 'Highway',
+	'description' => 'description',
+	'price' => 'Price',
+	'toll_settings' => 'Toll settings',
+	'activate' => 'Enable toll module',
+	'estimate_apply' => 'Apply pricing to estimate',
+	'select_category' => 'Select a toll category',
+	'toll_price' => 'Toll amount'
+);
