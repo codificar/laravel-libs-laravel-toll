@@ -76,7 +76,10 @@ class TollEstimatePrice
         $multipoint = '';
 
         foreach ($polylineData as $item) {
-            $multipoint = $multipoint . $item['lat'] . ' ' . $item['lng'] . ',';
+            if (array_key_exists('lat', $item))
+                $multipoint = $multipoint . $item['lat'] . ' ' . $item['lng'] . ',';
+            else if (array_key_exists('latitude', $item))
+                $multipoint = $multipoint . $item['latitude'] . ' ' . $item['longitude'] . ',';
         }
         
         $multipoint = 'MULTIPOINT(' . substr($multipoint, 0, -1) . ')';
