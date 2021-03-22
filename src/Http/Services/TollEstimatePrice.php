@@ -5,8 +5,6 @@ namespace Codificar\Toll\Http\Services;
 use Codificar\Toll\Models\Toll;
 use Codificar\Toll\Models\TollCategory;
 use Codificar\Toll\Utils\Helper;
-use Location\Coordinate;
-use Location\Distance\Vincenty;
 
 class TollEstimatePrice
 {
@@ -41,29 +39,16 @@ class TollEstimatePrice
                 $polylineData = $polyline;
             }
 
-            if ($polylineData && $providerType && $providerType->toll_category_id && $tollCategory = TollCategory::find($providerType->toll_category_id)) {
-                $tolls = Toll::where('category_description', $tollCategory->name)->get();
+            if (count($polylineData) && $providerType && $providerType->toll_category_id && $tollCategory = TollCategory::find($providerType->toll_category_id)) {
+                $multipoint = self::getMultipointText($polylineData);
+
+                $toll = Toll::getToll($multipoint, $tollCategory->name);
                 
-                foreach ($polylineData as $item) {
-                    for ($i=0; $i < count($tolls); $i++) { 
-                        $toll = $tolls[$i];
-                        
-                        $tollPoint = new Coordinate($toll->position->getLat(), $toll->position->getLng());
-                        $polylinePoint     = new Coordinate($item['lat'], $item['lng']);
-                        
-                        $calculator = new Vincenty();
-
-                        $distance   = $calculator->getDistance(	$tollPoint, $polylinePoint );
-                        $check 		= round($distance) <= 300; 
-
-                        if ($check) {
-                            return [
-                                'value' => $toll->value,
-                                'toll_description' => $toll->category_description
-                            ];
-                        } 
-                    }
-                }
+                if ($toll)
+                    return [
+                        'value' => $toll->value,
+                        'toll_description' => $toll->category_description
+                    ];
             }
 
             return [
@@ -78,5 +63,24 @@ class TollEstimatePrice
             ];
         }
         
+    }
+
+    /**
+     * Get multipoint text for query
+     * 
+     * @param array $polylineData
+     * @return string
+     */
+    public static function getMultipointText($polylineData)
+    {
+        $multipoint = '';
+
+        foreach ($polylineData as $item) {
+            $multipoint = $multipoint . $item['lat'] . ' ' . $item['lng'] . ',';
+        }
+        
+        $multipoint = 'MULTIPOINT(' . substr($multipoint, 0, -1) . ')';
+
+        return $multipoint;
     }
 }

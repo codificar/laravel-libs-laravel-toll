@@ -26,6 +26,18 @@ class Toll extends Model
         return $this->hasMany(TollItems::class);
     }
 
-
+    /**
+     * Get toll by name and multipoint
+     * 
+     * @param string $multipoint
+     * @param string $name
+     * @return Toll
+     */
+    public static function getToll($multipoint, $name)
+    {
+        return self::whereRaw("ST_Distance_Sphere(ST_GEOMFROMTEXT('$multipoint'), POINT(st_y(position), st_x(position))) < 300")
+            ->where('category_description', $name)
+            ->first();
+    }
 	
 }
