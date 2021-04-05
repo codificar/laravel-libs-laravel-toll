@@ -37,6 +37,7 @@ class Toll extends Model
     {
         return self::whereRaw("ST_Distance_Sphere(ST_GEOMFROMTEXT('$multipoint'), POINT(st_y(position), st_x(position))) < 300")
             ->where('category_description', $name)
+            ->select(\DB::raw('sum(value) as value'))
             ->first();
     }
 	

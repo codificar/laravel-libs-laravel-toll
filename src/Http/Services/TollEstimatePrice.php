@@ -47,7 +47,7 @@ class TollEstimatePrice
                 if ($toll)
                     return [
                         'value' => $toll->value,
-                        'toll_description' => $toll->category_description
+                        'toll_description' => $tollCategory->name
                     ];
             }
 
