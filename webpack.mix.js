@@ -11,4 +11,6 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('src/resources/assets/js/toll.vue.js', 'public/js');
+mix.js('src/resources/assets/js/toll.vue.js', 'public/js').vue();
+
+mix.copy('public/js/toll.vue.js', '../../../public/vendor/codificar/toll/toll.vue.js');

@@ -1,15 +1,48 @@
 {
     "name": "codificar/toll",
-    "description": "A toll library for laravel.",
+    "description": "A laravel lib to import tolls",
+    "type": "package",
+    "license": "Codificar Sistemas LTDA",
     "authors": [
         {
-            "name": "Codificar",
-            "email": "libs@codificar.com.br"
+            "name": "Joao Aires",
+            "email": "joao.aires@codificar.com.br"
+        },
+        {
+            "name": "Raphael Canguçu",
+            "email": "raphael.cangucu@codificar.com.br"
         }
     ],
+    "repositories": [
+        {
+          "type": "package",
+          "package": {
+            "name": "codificar/toll",
+            "version": "master",
+            "source": {
+              "url": "https://libs:ofImhksJ@git.codificar.com.br/laravel-libs/laravel-toll.git",
+              "type": "git",
+              "reference": "master"
+            }
+          }
+        }
+    ],   
     "autoload": {
         "psr-4": {
             "Codificar\\Toll\\": "src/"
         }
-    }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Codificar\\Toll\\TollServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
 }
