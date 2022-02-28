@@ -1,5 +1,5 @@
 <?php
-
+namespace Database\Seeders;
 use Codificar\Toll\Models\TollCategory;
 use Illuminate\Database\Seeder;
 
