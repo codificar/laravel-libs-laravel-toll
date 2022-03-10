@@ -17,7 +17,7 @@ Add in composer.json:
 
 ```php
 require:{
-        "codificar/toll": "0.1.0",
+        "codificar/toll": "0.0.1",
 }
 ```
 
