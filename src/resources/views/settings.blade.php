@@ -23,5 +23,5 @@
 
 @section('javascripts')
 <script src="/toll/lang.trans/toll"> </script> 
-<script src="{{ elixir('vendor/codificar/toll/toll.vue.js') }}"> </script> 
+<script src="{{ asset('vendor/codificar/toll/js/toll.vue.js') }}"> </script> 
 @endsection

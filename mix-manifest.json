@@ -1,4 +1,5 @@
 {
     "/public/js/toll.vue.js": "/public/js/toll.vue.js",
-    "/public/vendor/codificar/toll/toll.vue.js": "/public/vendor/codificar/toll/toll.vue.js"
+    "/public/vendor/codificar/toll/js/toll.vue.js": "/public/vendor/codificar/toll/js/toll.vue.js",
+    "/public/vendor/codificar/toll/js/toll.vue.js.LICENSE.txt": "/public/vendor/codificar/toll/js/toll.vue.js.LICENSE.txt"
 }

@@ -25,7 +25,7 @@ class TollServiceProvider extends ServiceProvider
         ], 'public_vuejs_libs');
 
         $this->publishes([
-            __DIR__.'/../public/js' => public_path('vendor/codificar/toll'),
+            __DIR__.'/../public/js' => public_path('vendor/codificar/toll/js'),
         ], 'public_vuejs_libs');
     }
 
