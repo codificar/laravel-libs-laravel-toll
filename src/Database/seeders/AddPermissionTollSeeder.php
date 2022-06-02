@@ -11,7 +11,7 @@ class AddPermissionTollSeeder extends Seeder
      */
     public function run()
     {
-        $permission = Permission::updateOrCreate(
+        $permission = \Permission::updateOrCreate(
             ['name' => 'ModuleToll'],
             [
                 'name' => 'ModuleToll',
@@ -23,7 +23,7 @@ class AddPermissionTollSeeder extends Seeder
             ]
         );
 
-        $permission1 = Permission::updateOrCreate(
+        $permission1 = \Permission::updateOrCreate(
             ['name' => 'SettingTolls'],
             [
                 'name' => 'SettingTolls',
@@ -34,7 +34,7 @@ class AddPermissionTollSeeder extends Seeder
             ]
         );
 
-        $permission2 = Permission::updateOrCreate(
+        $permission2 = \Permission::updateOrCreate(
             ['name' => 'listTolls'],
             [
                 'name' => 'listTolls',
@@ -45,7 +45,7 @@ class AddPermissionTollSeeder extends Seeder
             ]
         );
 
-        $permission3 = Permission::updateOrCreate(
+        $permission3 = \Permission::updateOrCreate(
             ['name' => 'listTollCategories'],
             [
                 'name' => 'listTollCategories',
@@ -61,23 +61,6 @@ class AddPermissionTollSeeder extends Seeder
         if($admins && $permission){
             $findProfiles = array();
             foreach($admins as $admin){
-                \AdminPermission::updateOrCreate(
-                    ['admin_id' => $admin->id, 'permission_id' => $permission->id],
-                    ['admin_id' => $admin->id, 'permission_id' => $permission->id]
-                );
-                \AdminPermission::updateOrCreate(
-                    ['admin_id' => $admin->id, 'permission_id' => $permission1->id],
-                    ['admin_id' => $admin->id, 'permission_id' => $permission1->id]
-                );
-                \AdminPermission::updateOrCreate(
-                    ['admin_id' => $admin->id, 'permission_id' => $permission2->id],
-                    ['admin_id' => $admin->id, 'permission_id' => $permission2->id]
-                );
-                \AdminPermission::updateOrCreate(
-                    ['admin_id' => $admin->id, 'permission_id' => $permission3->id],
-                    ['admin_id' => $admin->id, 'permission_id' => $permission3->id]
-                );
-                
                 if ($admin->profile_id && !in_array($admin->profile_id, $findProfiles)) {
                     $findProfiles = array_merge($findProfiles, array($admin->profile_id));
                     \ProfilePermission::updateOrCreate(
